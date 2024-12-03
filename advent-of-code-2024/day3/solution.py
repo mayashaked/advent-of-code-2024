@@ -39,7 +39,7 @@ def part2():
             do = True
         elif match == "don't()":
             do = False
-        elif match not in ("do()", "don't()") and do:
+        elif do and match not in ("do()", "don't()"):
             string_tuple = match[3:]
             try:
                 num1, num2 = ast.literal_eval(string_tuple)
