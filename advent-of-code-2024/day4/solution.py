@@ -6,7 +6,7 @@ def part1():
             crossword.append(line.strip())
 
     X_locs = find_X_locs(crossword)
-    has_MAS_after_X(crossword, X_locs)
+    return has_MAS_after_X(crossword, X_locs)
 
 def find_X_locs(crossword):
 
@@ -28,7 +28,7 @@ def has_MAS_after_X(crossword, X_locs):
             crossword=crossword,
             X_loc=X_loc,
             add_to_rownum = [0, 0, 0],
-            add_to_colnum = [1, 2, 3]
+            add_to_colnum= [1, 2, 3]
         )
         num_has_MAS_after_X += has_right_MAS
 
@@ -36,7 +36,7 @@ def has_MAS_after_X(crossword, X_locs):
             crossword=crossword,
             X_loc=X_loc,
             add_to_rownum = [0, 0, 0],
-            add_to_colnum = [-1, -2, -3]
+            add_to_colnum= [-1, -2, -3]
         )
         num_has_MAS_after_X += has_left_MAS
 
@@ -44,7 +44,7 @@ def has_MAS_after_X(crossword, X_locs):
             crossword=crossword,
             X_loc=X_loc,
             add_to_rownum = [-1, -2, -3],
-            add_to_colnum = [0, 0, 0]
+            add_to_colnum= [0, 0, 0]
         )
         num_has_MAS_after_X += has_upper_MAS
 
@@ -52,7 +52,7 @@ def has_MAS_after_X(crossword, X_locs):
             crossword=crossword,
             X_loc=X_loc,
             add_to_rownum = [1, 2, 3],
-            add_to_colnum = [0, 0, 0]
+            add_to_colnum= [0, 0, 0]
         )
         num_has_MAS_after_X += has_lower_MAS
 
@@ -60,7 +60,7 @@ def has_MAS_after_X(crossword, X_locs):
             crossword=crossword,
             X_loc=X_loc,
             add_to_rownum = [-1, -2, -3],
-            add_to_colnum = [1, 2, 3]
+            add_to_colnum= [1, 2, 3]
         )
         num_has_MAS_after_X += has_right_upper_MAS
 
@@ -68,7 +68,7 @@ def has_MAS_after_X(crossword, X_locs):
             crossword=crossword,
             X_loc=X_loc,
             add_to_rownum = [1, 2, 3],
-            add_to_colnum = [1, 2, 3]
+            add_to_colnum= [1, 2, 3]
         )
         num_has_MAS_after_X += has_right_lower_MAS
 
@@ -76,7 +76,7 @@ def has_MAS_after_X(crossword, X_locs):
             crossword=crossword,
             X_loc=X_loc,
             add_to_rownum = [1, 2, 3],
-            add_to_colnum = [-1, -2, -3]
+            add_to_colnum= [-1, -2, -3]
         )
         num_has_MAS_after_X += has_left_lower_MAS
 
@@ -84,7 +84,7 @@ def has_MAS_after_X(crossword, X_locs):
             crossword=crossword,
             X_loc=X_loc,
             add_to_rownum = [-1, -2, -3],
-            add_to_colnum = [-1, -2, -3]
+            add_to_colnum= [-1, -2, -3]
         )
         num_has_MAS_after_X += has_left_upper_MAS
 
@@ -95,21 +95,26 @@ def _has_MAS_after_X_directional(crossword, X_loc, add_to_rownum, add_to_colnum)
 
     [X_rownum, X_colnum] = X_loc
 
-    if (X_rownum + add_to_rownum[0] >= 0) and (X_colnum + add_to_colnum[0] >= 0) and (
-        X_rownum + add_to_rownum[1] >= 0) and (X_colnum + add_to_colnum[1] >= 0) and (
-        X_rownum + add_to_rownum[2] >= 0) and (X_colnum + add_to_colnum[2] >= 0):
+    row_one_next, col_one_next = X_rownum + add_to_rownum[0], X_colnum + add_to_colnum[0]
+    row_two_next, col_two_next = X_rownum + add_to_rownum[1], X_colnum + add_to_colnum[1]
+    row_three_next, col_three_next = X_rownum + add_to_rownum[2], X_colnum + add_to_colnum[2]
 
-        try:
-            (one_next, two_next, three_next) = (
-                crossword[X_rownum + add_to_rownum[0]][X_colnum + add_to_colnum[0]],
-                crossword[X_rownum + add_to_rownum[1]][X_colnum + add_to_colnum[1]],
-                crossword[X_rownum + add_to_rownum[2]][X_colnum + add_to_colnum[2]]
-            )
-            if one_next == 'M' and two_next == 'A' and three_next == 'S':
-                return 1
-            else:
-                return 0
-        except:
+    if (row_one_next >= 0) and (col_one_next >= 0) and (
+        row_two_next >= 0) and (col_two_next >= 0) and (
+        row_three_next >= 0) and (col_three_next >= 0) and (
+        row_one_next < len(crossword)) and (col_one_next < len(crossword[0])) and (
+        row_two_next < len(crossword)) and (col_two_next < len(crossword[0])) and (
+        row_three_next < len(crossword)) and (col_three_next < len(crossword[0])
+    ):
+
+        (one_next, two_next, three_next) = (
+            crossword[row_one_next][col_one_next],
+            crossword[row_two_next][col_two_next],
+            crossword[row_three_next][col_three_next]
+        )
+        if one_next == 'M' and two_next == 'A' and three_next == 'S':
+            return 1
+        else:
             return 0
     else:
         return 0
