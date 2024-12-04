@@ -6,7 +6,7 @@ def part1():
             crossword.append(line.strip())
 
     X_locs = find_X_locs(crossword)
-    return has_MAS_after_X(crossword, X_locs)
+    return num_has_MAS_after_X(crossword, X_locs)
 
 def find_X_locs(crossword):
 
@@ -19,7 +19,7 @@ def find_X_locs(crossword):
                 X_locs.append([rownum, colnum])
     return(X_locs)
 
-def has_MAS_after_X(crossword, X_locs):
+def num_has_MAS_after_X(crossword, X_locs):
 
     num_has_MAS_after_X = 0
 
@@ -119,6 +119,56 @@ def _has_MAS_after_X_directional(crossword, X_loc, add_to_rownum, add_to_colnum)
     else:
         return 0
 
+def part2():
+
+    crossword = []
+    with open('input.txt', 'r') as file:
+        for line in file:
+            crossword.append(line.strip())
+
+    A_locs = find_A_locs(crossword)
+    return num_has_MS_cross(crossword, A_locs)
+
+def find_A_locs(crossword):
+
+    A_locs = []
+
+    for rownum in range(len(crossword)):
+        for colnum in range(len(crossword[0])):
+            letter = crossword[rownum][colnum]
+            if letter == 'A':
+                A_locs.append([rownum, colnum])
+    return(A_locs)
+
+def num_has_MS_cross(crossword, A_locs):
+
+    num_cross = 0
+    for A_loc in A_locs:
+
+        [A_rownum, A_colnum] = A_loc
+
+        if A_rownum > 0 and A_colnum > 0 and A_rownum < len(crossword[0])-1 and A_colnum < len(crossword[0])-1:
+
+            top_left = crossword[A_rownum-1][A_colnum-1]
+            top_right = crossword[A_rownum-1][A_colnum+1]
+            bottom_left = crossword[A_rownum+1][A_colnum-1]
+            bottom_right = crossword[A_rownum+1][A_colnum+1]
+
+            if (
+                    top_left == 'M' and top_right == 'S' and bottom_left == 'M' and bottom_right == 'S'
+            ) or (
+                    top_left == 'M' and top_right == 'M' and bottom_left == 'S' and bottom_right == 'S'
+            ) or (
+                    top_left == 'S' and top_right == 'M' and bottom_left == 'S' and bottom_right == 'M'
+            ) or (
+                    top_left == 'S' and top_right == 'S' and bottom_left == 'M' and bottom_right == 'M'
+            ):
+                num_cross += 1
+
+    print(num_cross)
+    return num_cross
+
 
 if __name__ == "__main__":
     part1()
+    part2()
