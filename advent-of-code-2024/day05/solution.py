@@ -8,7 +8,7 @@ def part1():
     for rule_pair in rules: # get rules
         to_print_before, to_print_after = rule_pair
         for i, update in enumerate(updates): # go through each update
-            if to_print_before in update and to_print_after in update: # check whether either rule value is in update
+            if to_print_before in update and to_print_after in update: # check whether rule pair combo is in update
                 if update.index(to_print_before) > update.index(to_print_after): # check for incorrect order
                     if i not in faulty_updates:
                         faulty_updates.append(i) # save index of faulty updates
